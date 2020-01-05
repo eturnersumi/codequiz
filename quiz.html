@@ -8,9 +8,6 @@
 </head>
 
 <style>
-.answer-format {
-
-}
 
 
 </style>
@@ -38,61 +35,58 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-// var userChoice;
+var score = 0;
+var count = 0;
 
-// click event for start button
-$("#start").on("click", function(){
-   
-// start timer
+function startQuiz() { 
+    // start timer
 
-
-    // Add class to answers upon start click event
-    let aDisplay = $("<li>");
-    aDisplay.addClass("answer-format");
-    
     // empty content div that's displaying instructions
     $("#content").empty();   
     
-
-    function displayQuestions () {
+    // function displayQuestions () {
     for (let i = 0; i < questions.length; i++) {
         
         // Display questions
         let qDisplay = $("<div>");
         qDisplay=questions[i].title; 
-        $("#content").text(qDisplay);   
+        $("#content").text(qDisplay); 
+           
         
+         // Add class to answers upon start click event
+        let aDisplay = $("<li>");
+        aDisplay.addClass("answer-format");
         
         // Display answer choices
         aDisplay=questions[i].choices;
         $("#choices").text(aDisplay);
-        
-
-        // let nextButton = $("<button>");
-        // nextButton.text("Next Question");
-        $("#next").text("Next Question");
-        // $("#result").appendTo(nextButton);
-        // nextButton.append(result);
-        // $("#result").append(nextButton);
-        
+        i+=i;
+        count++;
+        console.log(i);
+        console.log(count);
     }
 }
-displayQuestions();
-
-})
-
-
 
 // Detect which answer is chosen
-
-$("#choices").on("click", function(event) {
+function answerChoice () {
     let userChoice = event.target.textContent;
     console.log(event);
-    
-});
+
+      // Add next button
+      $("#next").text("Next Question");
+}
+        
+
+function nextQuestion () {
+    $("#content").empty(); 
+    $("#choices").empty();
+    startQuiz();
+}
 
 
-// $("#")
+$("#start").on("click", startQuiz);
+$("#choices").on("click", answerChoice);
+$("#next").on("click", nextQuestion);
 
 });
 
