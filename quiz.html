@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Code Quiz</title>
+</head>
+<body>
+    
+    <div class="wrapper">
+        <a href="scores.html">View Highscores</a>
+        <div id="timerDisplay"></div>
+        <div id="content">
+            <p>Coding Quiz Challenge
+            <br>
+            Answer the following code-related questions to the best of your abilities. 
+            </p>
+            <button id="start">Start Quiz</button>
+        </div>
+        <!-- <div id="questionDisplay"></div> -->
+        <ul id="choices">
+        </ul>
+    </div>
+
+<script type="text/javascript" src="questions.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+// var userChoice;
+
+// click event for start button
+$("#start").on("click", function(){
+   
+// start timer
+
+// empty content div that's displaying instructions
+    $("#content").empty();   
+    
+generateQuestions();
+})
+
+// Iterate through questions array
+
+function generateQuestions() {
+    $.each(questions, function(i) {
+       
+       //Display questions/title    
+       $("#content").text(this.title);
+
+       // Create li for choices   
+       let li = $("<li>");
+
+        // Append answer choices from array to choices div
+       $("#choices").append(li);
+       
+        // Assign id to choices
+       li.attr("id", this.choices);
+        
+        // Display answer choices
+       $("#choices").text(this.choices);
+
+       // Create next question button
+       let nextButton = $("<button>");
+       nextButton.text("Next Question");
+       nextButton.appendTo(choices);
+
+       // Assign id attribute to choices
+
+       })
+
+}
+
+
+// Check if clicked answer is correct or wrong
+ $("#choices").on("click", function(event) {
+     event.preventDefault();
+    let returnResult = $("<div>");
+
+    // Get id of element clicked by user
+    let userChoice = event.target.id;
+    // console.log(userChoice);
+
+    if (userChoice === this.answer) {
+        returnResult.text("correct!");
+        // returnResult.appendTo(nextButton);
+    }
+    else {
+        returnResult.text("wrong answer!");
+        // returnResult.appendTo(nextButton);
+    }
+
+})
+
+
+
+})
+
+
+
+</script>    
+</body>
+</html>
