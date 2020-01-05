@@ -6,6 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Code Quiz</title>
 </head>
+
+<style>
+.answer-format {
+
+}
+
+
+</style>
 <body>
     
     <div class="wrapper">
@@ -21,6 +29,8 @@
         <!-- <div id="questionDisplay"></div> -->
         <ul id="choices">
         </ul>
+        <br>
+        <button id="next"></button>
     </div>
 
 <script type="text/javascript" src="questions.js"></script>
@@ -35,41 +45,43 @@ $("#start").on("click", function(){
    
 // start timer
 
+
+    // Add class to answers upon start click event
+    let aDisplay = $("<li>");
+    aDisplay.addClass("answer-format");
+    
     // empty content div that's displaying instructions
     $("#content").empty();   
+    
 
+    function displayQuestions () {
     for (let i = 0; i < questions.length; i++) {
         
         // Display questions
         let qDisplay = $("<div>");
-        qDisplay=questions[i].title;    
-        // qDisplay.text(questions[i].title);
-        // let qDisplay;
-        // qDisplay = questions[Math.floor(Math.random) * 5];
-        $("#content").text(qDisplay);
-        // // qDisplay.text(questions[Math.floor(Math.random() * 5)];
-        // $("#content").append(qDisplay); 
-        // qDisplay.attr('data-index', i);  
-        // qDisplay.addClass("question-format"); 
+        qDisplay=questions[i].title; 
+        $("#content").text(qDisplay);   
+        
+        
+        // Display answer choices
+        aDisplay=questions[i].choices;
+        $("#choices").text(aDisplay);
         
 
-        let aDisplay = $("<li>");
-        aDisplay.text(questions[i].choices);
-        $("#choices").append(aDisplay);
-        aDisplay.attr("data-index", i);
-        aDisplay.addClass("answer-format");
-        // console.log(aDisplay.i);
-
-        let nextButton = $("<button>");
-        nextButton.text("Next Question");
-        nextButton.appendTo(choices);
-
+        // let nextButton = $("<button>");
+        // nextButton.text("Next Question");
+        $("#next").text("Next Question");
+        // $("#result").appendTo(nextButton);
+        // nextButton.append(result);
+        // $("#result").append(nextButton);
         
     }
-
-    
+}
+displayQuestions();
 
 })
+
+
 
 // Detect which answer is chosen
 
@@ -78,6 +90,9 @@ $("#choices").on("click", function(event) {
     console.log(event);
     
 });
+
+
+// $("#")
 
 });
 
