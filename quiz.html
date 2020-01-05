@@ -35,68 +35,51 @@ $("#start").on("click", function(){
    
 // start timer
 
-// empty content div that's displaying instructions
+    // empty content div that's displaying instructions
     $("#content").empty();   
-    
-generateQuestions();
-})
 
-// Iterate through questions array
-
-function generateQuestions() {
-    $.each(questions, function(i) {
-       
-       //Display questions/title    
-       $("#content").text(this.title);
-
-       // Create li for choices   
-       let li = $("<li>");
-
-        // Append answer choices from array to choices div
-       $("#choices").append(li);
-       
-        // Assign id to choices
-       li.attr("id", this.choices);
+    for (let i = 0; i < questions.length; i++) {
         
-        // Display answer choices
-       $("#choices").text(this.choices);
+        // Display questions
+        let qDisplay = $("<div>");
+        qDisplay=questions[i].title;    
+        // qDisplay.text(questions[i].title);
+        // let qDisplay;
+        // qDisplay = questions[Math.floor(Math.random) * 5];
+        $("#content").text(qDisplay);
+        // // qDisplay.text(questions[Math.floor(Math.random() * 5)];
+        // $("#content").append(qDisplay); 
+        // qDisplay.attr('data-index', i);  
+        // qDisplay.addClass("question-format"); 
+        
 
-       // Create next question button
-       let nextButton = $("<button>");
-       nextButton.text("Next Question");
-       nextButton.appendTo(choices);
+        let aDisplay = $("<li>");
+        aDisplay.text(questions[i].choices);
+        $("#choices").append(aDisplay);
+        aDisplay.attr("data-index", i);
+        aDisplay.addClass("answer-format");
+        // console.log(aDisplay.i);
 
-       // Assign id attribute to choices
+        let nextButton = $("<button>");
+        nextButton.text("Next Question");
+        nextButton.appendTo(choices);
 
-       })
-
-}
-
-
-// Check if clicked answer is correct or wrong
- $("#choices").on("click", function(event) {
-     event.preventDefault();
-    let returnResult = $("<div>");
-
-    // Get id of element clicked by user
-    let userChoice = event.target.id;
-    // console.log(userChoice);
-
-    if (userChoice === this.answer) {
-        returnResult.text("correct!");
-        // returnResult.appendTo(nextButton);
+        
     }
-    else {
-        returnResult.text("wrong answer!");
-        // returnResult.appendTo(nextButton);
-    }
+
+    
 
 })
 
+// Detect which answer is chosen
 
+$("#choices").on("click", function(event) {
+    let userChoice = event.target.textContent;
+    console.log(event);
+    
+});
 
-})
-
+});
 
 
 </script>    
