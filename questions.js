@@ -3,9 +3,9 @@ var questions = [
       "title" : "Commonly used data types DO NOT include:",
       "choices" : [
                     "strings", 
-                    " booleans", 
-                    " alerts", 
-                    " numbers"
+                    "booleans", 
+                    "alerts", 
+                    "numbers"
                 ],
       "answer" : "alerts"
     },
@@ -13,9 +13,9 @@ var questions = [
       "title" : "The condition in an if / else statement is enclosed within ____.",
       "choices" : [
                     "quotes", 
-                    " curly brackets", 
-                    " parentheses", 
-                    " square brackets"
+                    "curly brackets", 
+                    "parentheses", 
+                    "square brackets"
                 ],
       "answer" : "parentheses"
     },
@@ -23,9 +23,9 @@ var questions = [
       "title" : "Innermost part of box model",
       "choices" : [
                     "Padding", 
-                    " Border", 
-                    " Content", 
-                    " Margin"
+                    "Border", 
+                    "Content", 
+                    "Margin"
                 ],
       "answer" : "Content"
     },
@@ -34,9 +34,9 @@ var questions = [
       "title" : "Self-closing tags DO NOT include:",
       "choices" : [
                     "<img>", 
-                    " <script>", 
-                    " <link>", 
-                    " <iframe>"
+                    "<script>", 
+                    "<link>", 
+                    "<iframe>"
                 ],
       "answer" : "<script>"
     },
@@ -44,9 +44,9 @@ var questions = [
       "title" : "Node properties to navigate between nodes with JavaScript DO NOT include:",
       "choices" : [
                     "firstChild", 
-                    " previousSibling", 
-                    " nextChild", 
-                    " nextSibling"
+                    "previousSibling", 
+                    "nextChild", 
+                    "nextSibling"
                 ],
       "answer" : "nextChild"
     },

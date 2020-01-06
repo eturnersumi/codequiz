@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,89 +9,157 @@
 </head>
 
 <style>
-
-
 </style>
+
 <body>
-    
+
+    <!-- Wrapper for all content -->
     <div class="wrapper">
+
+        <!-- link to scores html page -->
         <a href="scores.html">View Highscores</a>
+
+        <!-- Div to display timer -->
         <div id="timerDisplay"></div>
+
+        <!-- Div for questions, choices, result -->
         <div id="content">
             <p>Coding Quiz Challenge
-            <br>
-            Answer the following code-related questions to the best of your abilities. 
+                <br>
+                Answer the following code-related questions to the best of your abilities.
             </p>
             <button id="start">Start Quiz</button>
         </div>
-        <!-- <div id="questionDisplay"></div> -->
+        
+        <!-- ul to store answer choices as li -->
         <ul id="choices">
+
         </ul>
         <br>
+        
+        <!-- Alert used for score -->
+        <h3 id="alert"></h3>
+        
+        <!-- Next button after submitting answers -->
         <button id="next"></button>
+
+        <!-- Div to store score, initials -->
+        <div id="storage">
+        </div>
+
     </div>
 
-<script type="text/javascript" src="questions.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-
-var score = 0;
-var count = 0;
-
-function startQuiz() { 
-    // start timer
-
-    // empty content div that's displaying instructions
-    $("#content").empty();   
-    
-    // function displayQuestions () {
-    for (let i = 0; i < questions.length; i++) {
-        
-        // Display questions
-        let qDisplay = $("<div>");
-        qDisplay=questions[i].title; 
-        $("#content").text(qDisplay); 
+    <script type="text/javascript" src="questions.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            // Score calculated by amount of time. 15 seconds given per question
+            var score = 15 * questions.length;
            
-        
-         // Add class to answers upon start click event
-        let aDisplay = $("<li>");
-        aDisplay.addClass("answer-format");
-        
-        // Display answer choices
-        aDisplay=questions[i].choices;
-        $("#choices").text(aDisplay);
-        i+=i;
-        count++;
-        console.log(i);
-        console.log(count);
-    }
-}
+            var timer = 0;
+            $("#timerDisplay").text("0");
+                        
+            var i = 0;
+            
+            // Variable that holds value for whether the user responded
+            var responded;
 
-// Detect which answer is chosen
-function answerChoice () {
-    let userChoice = event.target.textContent;
-    console.log(event);
+            // i is going to control the questions  / j is going to control the choices inside every question since choices is considered an array 
+            function showquestion() {   
+                
+                // Timer interval set to 1000, which is 1 second so countdown takes place by the second. Countdown function called
+                timer = setInterval(countdown, 1000);
+                
+                console.log(i, questions[i])
+                // Responded default value set to false when question displayed
+                responded = false;
 
-      // Add next button
-      $("#next").text("Next Question");
-}
-        
+                // Empty elements 
+                $("#content").empty();
+                $("#choices").empty();
+                $("#alert").empty();
 
-function nextQuestion () {
-    $("#content").empty(); 
-    $("#choices").empty();
-    startQuiz();
-}
+                // Display question in position defined by i
+                $("#content").text(questions[i].title);
+                
+                // For loop needed to list all elements for choices array at one time. Per each element within questions array, choices is a seperate array
+                for (var j = 0; j < questions[i].choices.length; j++) {
+                    
+                    // Create list item for answer choices and set class and attribute
+                    let aDisplay = $("<li>");
+                    aDisplay.addClass("answer-format");
+                    aDisplay.attr("info", questions[i].choices[j]);
+
+                    // Display answer choices
+                    aDisplay.text(questions[i].choices[j]);
+                    $("#choices").append(aDisplay);
+                }
+                // Click event for the answer chosen by end user
+                $(".answer-format").on("click", function () {
+                    responded = true;
+                    $("#next").text("Next Question");
+                    console.log("Clicked", $(this).attr("info"))
+                    
+                    // Variable set for answer selected by end user
+                    var input = $(this).attr("info")
+                    console.log(input, questions[i].answer);
+                    
+                    // If statement to verify answer
+                    if (input !== questions[i].answer) {
+                        score = score - 15;
+                        $("#timerDisplay").text(score);
+                        $("#alert").text("Incorrect!");
+                    }
+                    else {
+                        $("#alert").text("Correct!");
+                    }
+                })
+            }
+
+            function countdown() {
+                // Score/timer decrementing 
+                score--;
+                $("#timerDisplay").text(score)
+                if (score <= 0) {
+                    clearInterval(timer);
+                    results();
+                }
+            }
+
+            function results() {
+                clearInterval(timer);
+                $(".wrapper").empty();
+                $(".wrapper").append(`<h1>Game over, your score is: ${score} </h1>`)
+                
+                // Input credentials 
+
+                console.log("this was the last one")
+            }
+
+            function nextQuestion() {
+                i++;
+                console.log("i", i)
+                if (responded === false) {
+                    alert("Please select an answer!");
+                }
+                else if (i >= questions.length) {
+                    clearInterval(timer);
+                    results()
+                }
+                else {
+                    showquestion()
+                }
+            }
 
 
-$("#start").on("click", startQuiz);
-$("#choices").on("click", answerChoice);
-$("#next").on("click", nextQuestion);
+            $("#start").on("click", showquestion);
+            $("#next").on("click", nextQuestion);
 
-});
+        });
 
 
-</script>    
+    </script>
 </body>
+
 </html>
