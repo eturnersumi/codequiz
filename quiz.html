@@ -57,7 +57,8 @@
             // Score calculated by amount of time. 15 seconds given per question
             var score = 15 * questions.length;
            
-            var timer = 0;
+            // Timer interval set to 1000, which is 1 second so countdown takes place by the second. Countdown function called
+            var timer = setInterval(countdown, 1000);
             $("#timerDisplay").text("0");
                         
             var i = 0;
@@ -66,11 +67,9 @@
             var responded;
 
             // i is going to control the questions  / j is going to control the choices inside every question since choices is considered an array 
-            function showquestion() {   
-                
-                // Timer interval set to 1000, which is 1 second so countdown takes place by the second. Countdown function called
-                timer = setInterval(countdown, 1000);
-                
+            function showquestion() {  
+                // timer = setInterval(countdown, 1000);
+                countdown();
                 console.log(i, questions[i])
                 // Responded default value set to false when question displayed
                 responded = false;
@@ -120,7 +119,7 @@
             function countdown() {
                 // Score/timer decrementing 
                 score--;
-                $("#timerDisplay").text(score)
+                $("#timerDisplay").text(score);
                 if (score <= 0) {
                     clearInterval(timer);
                     results();
@@ -129,12 +128,19 @@
 
             function results() {
                 clearInterval(timer);
+                let initials = $("<input type=\"text\"/>");
+                initials.attr("id", "initials-box");
                 $(".wrapper").empty();
-                $(".wrapper").append(`<h1>Game over, your score is: ${score} </h1>`)
-                
-                // Input credentials 
+                $(".wrapper").append(`<h1>Game over, your score is: ${score} </h1>`).append(initials);
 
-                console.log("this was the last one")
+                // Input credentials 
+                // let label = $("<label for\"" +")
+               
+                
+                // $("#storage").append("hello world");
+                // $("storage").appendTo(".wrapper");
+
+                console.log("Last question");
             }
 
             function nextQuestion() {
@@ -143,9 +149,9 @@
                 if (responded === false) {
                     alert("Please select an answer!");
                 }
-                else if (i >= questions.length) {
+                else if (i === questions.length) {
                     clearInterval(timer);
-                    results()
+                    results();
                 }
                 else {
                     showquestion()
