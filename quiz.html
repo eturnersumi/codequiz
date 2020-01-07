@@ -130,15 +130,11 @@
                 clearInterval(timer);
                 let initials = $("<input type=\"text\"/>");
                 initials.attr("id", "initials-box");
+                let submit = $("<input type=\"submit\"/>");
                 $(".wrapper").empty();
-                $(".wrapper").append(`<h1>Game over, your score is: ${score} </h1>`).append(initials);
+                $(".wrapper").append(`<h1>Game over, your score is: ${score} </h1>`).append("Enter your name: ").append(initials).append(submit);
 
-                // Input credentials 
-                // let label = $("<label for\"" +")
-               
-                
-                // $("#storage").append("hello world");
-                // $("storage").appendTo(".wrapper");
+                // let scoreInitials = 
 
                 console.log("Last question");
             }
