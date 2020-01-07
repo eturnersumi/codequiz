@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>High Scores</title>
+</head>
+<body>
+    <h1 id="scores-header">Highscores</h1>
+
+    <span id="score-name">
+    </span>
+    <span id="score-score">
+    </span>
+    <br>
+    <br>
+    <a href="quiz.html">Home</a>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function () {
+    let lastScore;
+    // lastScore.attr("id")
+    function getScores () {
+    lastScore = JSON.parse(localStorage.getItem("scoreStorage"));
+    console.log(lastScore.name);
+
+    $("#score-name").text(lastScore.name);
+    $("#score-score").text(lastScore.score);
+    // $("#scores-header").append(lastScore.name).append(lastScore.score);
+    }
+    // console.log(lastScore.name);
+
+    getScores();
+});
+    </script>
+</body>
+</html>

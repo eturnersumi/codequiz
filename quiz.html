@@ -9,6 +9,28 @@
 </head>
 
 <style>
+    
+    .end-navigation {
+        background-color: aqua;
+        font-weight: bold;
+        padding-right: 10px;
+    }
+    #timerDisplay {
+        float:right;
+    }
+    #content {
+        background-color: burlywood;
+        font-size: 20px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    #choices {
+        font-size: 18px;
+    }
+    .answer-format {
+        font-weight: bold;
+        
+    }
+
 </style>
 
 <body>
@@ -42,12 +64,14 @@
         
         <!-- Next button after submitting answers -->
         <button id="next"></button>
-
-        <!-- Div to store score, initials -->
-        <div id="storage">
-        </div>
-
+        
     </div>
+    <!-- Div to navigate after end of quiz -->
+    <br>
+    <br>
+    <br>
+    <div id="navigation">
+        </div>
 
     <script type="text/javascript" src="questions.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -62,22 +86,27 @@
             $("#timerDisplay").text("0");
                         
             var i = 0;
+            let initials;
+            let scoreArr = [];
             
             // Variable that holds value for whether the user responded
             var responded;
 
             // i is going to control the questions  / j is going to control the choices inside every question since choices is considered an array 
-            function showquestion() {  
+            function showquestion() { 
+                
+                // Empty elements 
+                $("#content").empty();
+                $("#choices").empty();
+                $("#alert").empty();
+
                 // timer = setInterval(countdown, 1000);
                 countdown();
                 console.log(i, questions[i])
                 // Responded default value set to false when question displayed
                 responded = false;
 
-                // Empty elements 
-                $("#content").empty();
-                $("#choices").empty();
-                $("#alert").empty();
+                
 
                 // Display question in position defined by i
                 $("#content").text(questions[i].title);
@@ -128,13 +157,31 @@
 
             function results() {
                 clearInterval(timer);
-                let initials = $("<input type=\"text\"/>");
-                initials.attr("id", "initials-box");
-                let submit = $("<input type=\"submit\"/>");
+                initials = $("<input type=\"text\"/>").attr("id", "name");
+                let submit = $("<input type=\"submit\"/>").attr("id", "submit-button");
+                let back = $("<a>").attr("href", "quiz.html").addClass("end-navigation").text("Back ");
+                let scorePage = $("<a>").attr("href", "scores.html").addClass("end-navigation").text("View Highscores");
+                
                 $(".wrapper").empty();
                 $(".wrapper").append(`<h1>Game over, your score is: ${score} </h1>`).append("Enter your name: ").append(initials).append(submit);
 
-                // let scoreInitials = 
+                $("#submit-button").on("click", function(event) {
+                    event.preventDefault();
+            
+                    var scoreStorage = {
+                       "name": initials[0].value,
+                       "score": score 
+                    };
+                    localStorage.setItem("scoreStorage", JSON.stringify(scoreStorage));
+                    scoreArr.push(scoreStorage);
+
+                    // back.appendTo($(".wrapper"));
+                    // let back = $("<button>");
+                    // let scorePage = $("<button>");
+                    $("#navigation").append(back).append(scorePage);
+                    // back.appendTo($("#navigation"));
+                })
+                
 
                 console.log("Last question");
             }
@@ -157,6 +204,7 @@
 
             $("#start").on("click", showquestion);
             $("#next").on("click", nextQuestion);
+            $("#back-button").click(showquestion);
 
         });
 
